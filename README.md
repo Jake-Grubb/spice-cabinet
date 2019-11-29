@@ -6,5 +6,9 @@ Servers commonly use both random salts and secret pepper when hashing user passw
 By keeping the salts seperate from the database of hashed passwords, attackers who gain access to the database of hashed passwords will be unable to determine which salt is used for each password, without knowing hash value of the original plaintext password. The use of a random salt and secret pepper is commonly used when calculating hash values to be placed within a password database, to increase the length of the plaintext value being input into the hash function.
 # Detriments
 This method requires the server to perform two hash calculations every time a new password is added to the database, and two hash calculations every time a user attempts to validate existing credentials.
+# Considerations
+- This method has an assumption that the hash function has a random distribtution of possible values within the first n-bits. An unequal distribution of possible hash values could be used to identify salts that are "more likely" than others to be selected from the initial salt selection algorithm.
+- I am considering adding the secret server "pepper" to the initial hash function to help mitigate the calculation of possible hash results from standard dictionary attacks. This would reduce the ability of a hacker to determine which salt was used by each entry in the database.
+
 # Diagram
 ![Spice Cabinet](spice-cabinet.png)
